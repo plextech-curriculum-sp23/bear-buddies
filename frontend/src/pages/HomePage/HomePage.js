@@ -1,13 +1,22 @@
 import CardGrid from "@/components/CardGrid/CardGrid";
 import EventButton from "@/components/EventButton/EventButton";
 import SearchBar from "@/components/SearchBar/SearchBar";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import styles from "src/pages/HomePage/HomePage.module.css";
 import moffitpic from "public/moffitt.jpeg"; 
 import dylanPic from "public/dylan.jpeg";
 import NavBar from "@/components/NavBar/NavBar";
 
 function HomePage() {
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/get-all-events")
+        .then(response => response.json())
+        .then(data => {
+            setEvents(data)
+        })
+    }, [])
     return (
         <div> 
                 <NavBar page={0}> </NavBar>
@@ -21,17 +30,7 @@ function HomePage() {
                     </div> 
                 </div>
                 <div className= {styles.cardGrid}>
-                    <CardGrid cardData={[
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                            {title: "Study for CS 70", image: moffitpic, author: "Dylan Hopkins", authorPic: dylanPic, maxCap: 8, currCap: 7, location: "350 Moffitt Library, Berkeley, 94720", time: "7:00", description: "Study for CS. Yayy!!", joined: true, owner: false},
-                        ]}> </CardGrid> 
+                    <CardGrid cardData={events}> </CardGrid> 
                 </div>
         </div>
     )
